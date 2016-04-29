@@ -1,16 +1,16 @@
-require_relative 'grabber'
+require_relative "../grabber-base"
 
-class GrabDC9 < Grabber
+class Grabber < GrabberBase
   # get the array of urls to grab from
-  def grab_urls
+  def self.grab_urls
     # The url that list all the shows
     [
       "http://dcnine.com/calendar/"
     ]
   end
   # Go through each url to get the shows
-  def shows
-    self.grab_pages(self.grab_urls).map do |page|
+  def self.shows
+    allevents = self.grab_pages(self.grab_urls).map do |page|
       # Looks like it is consistent in layout
       # so grab what we need
       events = []
@@ -48,7 +48,6 @@ class GrabDC9 < Grabber
       end
       events
     end
+    allevents.flatten.compact
   end
 end
-
-p(GrabDC9.new.shows)

@@ -1,17 +1,17 @@
-require_relative 'grabber'
+require_relative "../grabber-base"
 
-class GrabTheHowardTheatre < Grabber
+class Grabber < GrabberBase
   # get the array of urls to grab from
-  def grab_urls
+  def self.grab_urls
     # The url that list all the shows
     [
       "http://thehowardtheatre.com/calendar/"
     ]
   end
   # Go through each url to get the shows
-  def shows
+  def self.shows
     # The layout is crazy !? (uses fullcalendar)
-    self.grab_pages(self.grab_urls).map do |page|
+    events = self.grab_pages(self.grab_urls).map do |page|
       # Looks like it is consistent in the classes it uses
       # so grab what we need
       page.search("a.fc-event").map do |elem|
@@ -43,7 +43,6 @@ class GrabTheHowardTheatre < Grabber
         }
       end
     end
+    events.flatten.compact
   end
 end
-
-p(GrabTheHowardTheatre.new.shows)

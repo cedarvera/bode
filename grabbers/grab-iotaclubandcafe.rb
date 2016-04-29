@@ -1,15 +1,15 @@
-require_relative "grabber"
+require_relative "../grabber-base"
 
-class GrabIotaClubAndCafe < Grabber
+class Grabber < GrabberBase
   # The url that list all the shows
-  def grab_urls
+  def self.grab_urls
     [
       "http://www.iotaclubandcafe.com/start/sched_cur.asp"
       #"http://www.iotaclubandcafe.com/"
     ]
   end
   # Go through each url to get the shows
-  def shows
+  def self.shows
     events = []
     self.grab_pages(self.grab_urls).map do |page|
       # Looks like it is consistent in layout
@@ -75,8 +75,6 @@ class GrabIotaClubAndCafe < Grabber
         end
       end
     end
-    events
+    events.flatten.compact
   end
 end
-
-p(GrabIotaClubAndCafe.new.shows)

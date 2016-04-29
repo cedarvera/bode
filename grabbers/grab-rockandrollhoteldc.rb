@@ -1,15 +1,15 @@
-require_relative "grabber"
+require_relative "../grabber-base"
 
-class GrabRockAndRollHotelDC < Grabber
+class Grabber < GrabberBase
   # The url that list all the shows
-  def grab_urls
+  def self.grab_urls
     [
       "http://www.rockandrollhoteldc.com/"
     ]
   end
   # Go through each url to get the shows
-  def shows
-    self.grab_pages(self.grab_urls).map do |page|
+  def self.shows
+    events = self.grab_pages(self.grab_urls).map do |page|
       # Looks like it is consistent in the classes it uses
       # so grab what we need
       page.search(".entry-content-live").map do |elem|
@@ -46,7 +46,6 @@ class GrabRockAndRollHotelDC < Grabber
         }
       end
     end
+    events.flatten.compact
   end
 end
-
-p(GrabRockAndRollHotelDC.new.shows)

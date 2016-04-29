@@ -1,16 +1,16 @@
-require_relative 'grabber'
+require_relative "../grabber-base"
 
-class GrabSixthAndI < Grabber
+class Grabber < GrabberBase
   # get the array of urls to grab from
-  def grab_urls
+  def self.grab_urls
     # The url that list all the shows
     [
       "https://www.sixthandi.org/events/category/arts-entertainment/music/list/"
     ]
   end
   # Go through each url to get the shows
-  def shows
-    self.grab_pages(self.grab_urls).map do |page|
+  def self.shows
+    events = self.grab_pages(self.grab_urls).map do |page|
       # Looks like it is consistent in the classes it uses
       # so grab what we need
       page.search(".event-list-item").map do |elem|
@@ -31,7 +31,6 @@ class GrabSixthAndI < Grabber
         }
       end
     end
+    events.flatten.compact
   end
 end
-
-p(GrabSixthAndI.new.shows)
