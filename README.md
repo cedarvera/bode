@@ -1,6 +1,6 @@
 # bode
 
-Scape venues that I frequent for concerts and find to musicians and bands that I listen to.
+Scape venues that I frequent for concerts and find the musicians and bands that I listen to.
 
 ## Requirements
 
