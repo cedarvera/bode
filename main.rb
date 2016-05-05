@@ -1,19 +1,32 @@
 #!/usr/bin/env ruby
 
-require "pp"
+require "thread"
+require "json"
 
-folder = "grabbers"
+FOLDER = "grabbers"
+threads = []
 shows = []
 
 # go through each grabber script in the grabbers folder and grab the shows
-Dir.foreach(folder) do |file|
+Dir.foreach(FOLDER) do |file|
   next unless file =~ /[[:word:]]/
-  # dynamically load and run the grab script to get the shows from the website
-  mod = Module.new
-  load "#{folder}/#{file}"
-  mod.const_set("Grabber", Grabber)
-  Object.send(:remove_const, :Grabber)
-  shows << mod::Grabber.shows
+  # Start a thread for each grabber
+  threads << Thread.new {
+    # dynamically load and run the grab script to get the shows from the website
+    mod = Module.new
+    load "#{FOLDER}/#{file}"
+    mod.const_set("Grabber", Grabber)
+    Object.send(:remove_const, :Grabber)
+    shows.concat(mod::Grabber.shows)
+  }
+  # restrict to only running 5 at a time
+  if threads.size >= 5
+    threads.each { |thread| thread.join }
+    threads = []
+  end
 end
 
-PP.pp(shows)
+# wait until last of the threads are done
+threads.each { |thread| thread.join }
+
+print(shows.to_json)
