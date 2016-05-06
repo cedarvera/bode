@@ -1,16 +1,16 @@
 require_relative "../grabber-base"
 
 class Grabber < GrabberBase
-  # get the array of urls to grab from
-  def self.grab_urls
+  # constructor
+  def initialize
     # The url that list all the shows
-    [
+    @urls = [
       "https://www.sixthandi.org/events/category/arts-entertainment/music/list/"
     ]
   end
   # Go through each url to get the shows
-  def self.shows
-    events = self.grab_pages(self.grab_urls).map do |page|
+  def shows
+    events = grab_pages.map do |page|
       # Looks like it is consistent in the classes it uses
       # so grab what we need
       page.search(".event-list-item").map do |elem|

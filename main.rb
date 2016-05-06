@@ -17,7 +17,7 @@ Dir.foreach(FOLDER) do |file|
     load "#{FOLDER}/#{file}"
     mod.const_set("Grabber", Grabber)
     Object.send(:remove_const, :Grabber)
-    shows.concat(mod::Grabber.shows)
+    shows.concat(mod::Grabber.new.shows)
   }
   # restrict to only running 5 at a time
   if threads.size >= 5

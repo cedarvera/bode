@@ -1,17 +1,17 @@
 require_relative "../grabber-base"
 
 class Grabber < GrabberBase
-  # The url that list all the shows
-  def self.grab_urls
-    [
+  # constructor
+  def initialize
+    @urls = [
       "http://www.iotaclubandcafe.com/start/sched_cur.asp"
       #"http://www.iotaclubandcafe.com/"
     ]
   end
   # Go through each url to get the shows
-  def self.shows
+  def shows
     events = []
-    self.grab_pages(self.grab_urls).map do |page|
+    grab_pages.map do |page|
       # Looks like it is consistent in layout
       # so grab what we need
       # shows are table in div with id contentCont

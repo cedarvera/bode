@@ -1,16 +1,16 @@
 require_relative "../grabber-base"
 
 class Grabber < GrabberBase
-  # get the array of urls to grab from
-  def self.grab_urls
+  # constructor
+  def initialize
     # The url that list all the shows
-    [
+    @urls = [
       "http://dcnine.com/calendar/"
     ]
   end
   # Go through each url to get the shows
-  def self.shows
-    allevents = self.grab_pages(self.grab_urls).map do |page|
+  def shows
+    allevents = grab_pages.map do |page|
       # Looks like it is consistent in layout
       # so grab what we need
       events = []
