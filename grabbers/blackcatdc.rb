@@ -14,11 +14,11 @@ class Grabber < GrabberBase
       # Looks like it is consistent in the classes it uses
       # so grab what we need
       page.search(".show-details").map do |elem|
-        headlinerNode = elem.at(".headline a")
-        # check if headline is there.
-        headline = headlinerNode == nil ? "" : headlinerNode.text
+        headliners = elem.search(".headline a").map do |headliner|
+          headliner.text.strip
+        end
         # if its empty then its at the Upcoming which we can skip
-        next if headline.empty?
+        next if headliners.empty?
 
         dateNode = elem.at(".date")
         # convert the date so we can see the year
@@ -34,8 +34,8 @@ class Grabber < GrabberBase
         {
           :venue     => "Black Cat",
           :date      => date,
-          :headliner => headline,
-          :support   => support
+          :headliner => headliners.first,
+          :support   => headliners.drop(1) + support
         }
       end
     end
