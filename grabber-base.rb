@@ -10,10 +10,12 @@ class GrabberBase
   end
   # grab the htmls at the target urls returning a nokogiri object for each
   def grab_pages
-    # if urls is nil then default to the one in my urls
-    @urls.map do |url|
-      grab_page(url)
-    end
+    @urls.map { |url| grab_page(url) }
+  end
+  # Go through each url to get the shows
+  def shows
+    events = grab_pages.map { |page| find_shows(page) }
+    events.flatten.compact
   end
   # convert the date text into the date of the show
   def convert_date(text)
