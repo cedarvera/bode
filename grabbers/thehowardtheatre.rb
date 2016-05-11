@@ -37,8 +37,8 @@ class Grabber < GrabberBase
       {
         :venue     => "The Howard Theatre",
         :date      => date,
-        :headliner => headlinerNode == nil ? "": headlinerNode.text,
-        :support   => supportNode == nil ?   [] : supportNode.text.split(",")
+        :headliner => headlinerNode.nil? ? "": headlinerNode.text,
+        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
       }
     end
   end

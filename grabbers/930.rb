@@ -25,10 +25,10 @@ class Grabber < GrabberBase
       # create the show object
       {
         # If there is no venue than its at 930 club
-        :venue     => venueNode == nil ?     "930 Club" : venueNode.text,
+        :venue     => venueNode.nil? ?     "930 Club" : venueNode.text,
         :date      => date,
-        :headliner => headlinerNode == nil ? "" : headlinerNode.text,
-        :support   => supportNode == nil ?   [] : supportNode.text.split(",")
+        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
+        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
       }
     end
   end

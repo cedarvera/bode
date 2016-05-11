@@ -25,8 +25,8 @@ class Grabber < GrabberBase
       {
         :venue     => "Sixth & I Synagogue",
         :date      => date,
-        :headliner => headlinerNode == nil ? "" : headlinerNode.text,
-        :support   => supportNode == nil ?   [] : supportNode.text.split(",")
+        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
+        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
       }
     end
   end

@@ -22,8 +22,8 @@ class Grabber < GrabberBase
       dateNode = elem.at(".date")
       # convert the date so we can see the year
       date = Date.today
-      if dateNode != nil and not dateNode.text.empty?
-        date = self.convert_date(dateNode.text)
+      if not dateNode.nil? and not dateNode.text.empty?
+        date = convert_date(dateNode.text)
       end
       # the supports are in their own nodes!
       support = elem.search(".support").map do |sup|

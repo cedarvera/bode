@@ -17,13 +17,13 @@ class Grabber < GrabberBase
       supportNode   = elem.at(".supports a")
       dateNode      = elem.at(".dates")
       # convert the date so we can see the year
-      date = self.convert_date(dateNode.text)
+      date = convert_date(dateNode.text)
       # create the show object
       {
         :venue     => "U Street Music Hall",
         :date      => date,
-        :headliner => headlinerNode == nil ? "" : headlinerNode.text,
-        :support   => supportNode == nil ?   [] : supportNode.text.split(",")
+        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
+        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
       }
     end
   end

@@ -36,7 +36,7 @@ class Grabber < GrabberBase
       # it appears to be broken to multiple strong nodes
       elsif node.name == "p"
         # the first child appears to be the date
-        event[:date] = self.convert_date(node.first_element_child.text.strip)
+        event[:date] = convert_date(node.first_element_child.text.strip)
         # this is for DC9
         event[:venue] = "DC9"
         # it is also the last node before the next show group
