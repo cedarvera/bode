@@ -1,4 +1,4 @@
-require_relative "../grabber-base"
+require_relative "../grabber_base"
 
 class Grabber < GrabberBase
   # constructor
