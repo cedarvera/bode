@@ -13,9 +13,14 @@ class GrabberBase
     @urls.map { |url| grab_page(url) }
   end
   # Go through each url to get the shows
-  def shows
-    events = grab_pages.map { |page| find_shows(page) }
-    events.flatten.compact
+  def get_shows
+    grab_pages.map do |page|
+      shows = find_shows(page).flatten.compact
+      {
+        html: page,
+        shows: shows
+      }
+    end
   end
   # convert the date text into the date of the show
   def convert_date(text)
