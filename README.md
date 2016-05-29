@@ -13,6 +13,8 @@ Binaries:
 Ruby gems:
 
     nokogiri
+    capybara
+    poltergeist
     taglib-ruby
     
 ## License

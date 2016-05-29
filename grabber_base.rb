@@ -1,12 +1,28 @@
 require 'date'
 require 'nokogiri'
+require "capybara/dsl"
+require "capybara/poltergeist"
+
+Capybara.register_driver :poltergeist do |driver|
+  Capybara::Poltergeist::Driver.new(driver, js_errors: false)
+end
+
+Capybara.configure do |config|
+  config.ignore_hidden_elements = true
+  Capybara.current_driver = :poltergeist
+  Capybara.default_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
+  Capybara.default_selector = :css
+end
 
 class GrabberBase
+  include Capybara::DSL
   # get the array of urls to grab from
   @urls = []
   # grab the html at the target url and return a nokogiri object of the html
   def grab_page(url)
-    Nokogiri::HTML(`phantomjs --ignore-ssl-errors=true grab.js #{url}`)
+    visit(url)
+    Nokogiri::HTML(page.html)
   end
   # grab the htmls at the target urls returning a nokogiri object for each
   def grab_pages
