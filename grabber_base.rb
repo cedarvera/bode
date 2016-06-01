@@ -1,5 +1,4 @@
 require 'date'
-require 'nokogiri'
 require "capybara/dsl"
 require "capybara/poltergeist"
 
@@ -17,24 +16,12 @@ end
 
 class GrabberBase
   include Capybara::DSL
-  # get the array of urls to grab from
-  @urls = []
-  # grab the html at the target url and return a nokogiri object of the html
-  def grab_page(url)
-    visit(url)
-    Nokogiri::HTML(page.html)
-  end
-  # grab the htmls at the target urls returning a nokogiri object for each
-  def grab_pages
-    @urls.map { |url| grab_page(url) }
-  end
-  # Go through each url to get the shows
+  # Have each scraper override the grab_pages method and return the shows
   def get_shows
-    grab_pages.map do |page|
-      shows = find_shows(page).flatten.compact
+    find_shows do |shows, html|
       {
-        html: page,
-        shows: shows
+        shows: shows.flatten.compact,
+        html: html
       }
     end
   end
