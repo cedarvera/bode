@@ -19,14 +19,12 @@ class GrabberBase
   include Capybara::DSL
   # get the array of urls to grab from
   @urls = []
-  # grab the html at the target url and return a nokogiri object of the html
-  def grab_page(url)
-    visit(url)
-    Nokogiri::HTML(page.html)
-  end
   # grab the htmls at the target urls returning a nokogiri object for each
   def grab_pages
-    @urls.map { |url| grab_page(url) }
+    @urls.map do |url|
+      visit(url)
+      Nokogiri::HTML(page.html)
+    end
   end
   # Go through each url to get the shows
   def get_shows
