@@ -40,13 +40,13 @@ class GrabberBase
   end
   # convert the date text into the date of the show
   def convert_date(text)
-    # use today if not parsable
-    date = Date.parse(text) rescue Date.today
+    date = Date.parse(text)
     # if its parsed to be before today then its in usually the following year
-    if date < Date.today
-      date.next_year
-    else
-      date
-    end
+    date.next_year if date < Date.today
+    # return date
+    date
+  rescue
+    # use today if not parsable
+    Date.today
   end
 end
