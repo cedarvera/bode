@@ -15,8 +15,9 @@ Dir.foreach(FOLDER) do |file|
   mod.const_set("Grabber", Grabber)
   Object.send(:remove_const, :Grabber)
   begin
-    new_shows = mod::Grabber.new.get_shows
-    shows.concat(new_shows)
+    mod::Grabber.new.get_shows do |new_shows|
+      shows << new_shows
+    end
   rescue Capybara::Poltergeist::StatusFailError
     puts("#{file}: site possibly down")
   end

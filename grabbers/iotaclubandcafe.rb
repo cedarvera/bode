@@ -1,12 +1,11 @@
 require_relative "../grabber_base"
 
 class Grabber < GrabberBase
-  # constructor
-  def initialize
-    @urls = [
-      "http://www.iotaclubandcafe.com/start/sched_cur.asp"
-      #"http://www.iotaclubandcafe.com/"
-    ]
+  # get the pages and return the resulting html
+  def grab_pages
+    visit("http://www.iotaclubandcafe.com/start/sched_cur.asp")
+    yield(page.html)
+    #"http://www.iotaclubandcafe.com/"
   end
   # Go through the page and find the the shows
   def find_shows(page)

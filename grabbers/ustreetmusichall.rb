@@ -1,11 +1,10 @@
 require_relative "../grabber_base"
 
 class Grabber < GrabberBase
-  # constructor
-  def initialize
-    @urls = [
-      "http://www.ustreetmusichall.com/calendar"
-    ]
+  # get the pages and return the resulting html
+  def grab_pages
+    visit("http://www.ustreetmusichall.com/calendar")
+    yield(page.html)
   end
   # Go through the page and find the the shows
   def find_shows(page)

@@ -1,12 +1,10 @@
 require_relative "../grabber_base"
 
 class Grabber < GrabberBase
-  # constructor
-  def initialize
-    # The url that list all the shows
-    @urls = [
-      "http://thehowardtheatre.com/calendar/"
-    ]
+  # get the pages and return the resulting html
+  def grab_pages
+    visit("http://thehowardtheatre.com/calendar/")
+    yield(page.html)
   end
   # Go through the page and find the the shows
   # The layout is crazy !? (uses fullcalendar)

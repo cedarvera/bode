@@ -17,23 +17,14 @@ end
 
 class GrabberBase
   include Capybara::DSL
-  # get the array of urls to grab from
-  @urls = []
-  # grab the htmls at the target urls returning a nokogiri object for each
-  def grab_pages
-    @urls.map do |url|
-      visit(url)
-      Nokogiri::HTML(page.html)
-    end
-  end
   # Go through each url to get the shows
   def get_shows
-    grab_pages.map do |page|
-      shows = find_shows(page).flatten.compact
-      {
-        html: page,
+    grab_pages do |html|
+      shows = find_shows(Nokogiri::HTML(html)).flatten.compact
+      yield({
+        html: html,
         shows: shows
-      }
+      })
     end
   end
   # convert the date text into the date of the show
