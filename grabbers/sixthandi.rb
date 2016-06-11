@@ -5,6 +5,11 @@ class Grabber < GrabberBase
   def grab_pages
     visit("https://www.sixthandi.org/events/category/arts-entertainment/music/list/")
     yield(page.html)
+    # keep checking the next events page when available
+    while(has_link?("Next Events »"))
+      click_link("Next Events »")
+      yield(page.html)
+    end
   end
   # Go through the page and find the the shows
   def find_shows(page)
