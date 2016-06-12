@@ -5,6 +5,11 @@ class Grabber < GrabberBase
   def grab_pages
     visit("http://jamminjava.com/calendar")
     yield(page.html)
+
+    while(has_link?(">"))
+      click_link(">")
+      yield(page.html)
+    end
   end
   # Go through the page and find the the shows
   def find_shows(page)
