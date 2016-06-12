@@ -15,7 +15,7 @@ Capybara.configure do |config|
   Capybara.default_selector = :css
 end
 
-class GrabberBase
+class ScraperBase
   include Capybara::DSL
   # Go through each url to get the shows
   def get_shows

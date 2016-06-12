@@ -1,6 +1,6 @@
-require_relative "../grabber_base"
+require_relative "lib/scraper_base"
 
-class Grabber < GrabberBase
+class Scraper < ScraperBase
   # get the pages and return the resulting html
   def grab_pages
     visit("http://www.930.com/concerts/")

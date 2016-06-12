@@ -1,17 +1,22 @@
-require_relative "../grabber_base"
+require_relative "lib/scraper_base"
 
-class Grabber < GrabberBase
+class Scraper < ScraperBase
   # get the pages and return the resulting html
   def grab_pages
-    visit("http://www.ustreetmusichall.com/calendar")
+    visit("http://jamminjava.com/calendar")
     yield(page.html)
+
+    while(has_link?(">"))
+      click_link(">")
+      yield(page.html)
+    end
   end
   # Go through the page and find the the shows
   def find_shows(page)
     # Looks like it is consistent in the classes it uses
     # so grab what we need
     page.search(".vevent").map do |elem|
-      # uhall has the same format as 930's website
+      # jammin java has the same format as 930's website
       headlinerNode = elem.at(".headliners a")
       supportNode   = elem.at(".supports a")
       dateNode      = elem.at(".dates")
@@ -19,7 +24,7 @@ class Grabber < GrabberBase
       date = convert_date(dateNode.text)
       # create the show object
       {
-        :venue     => "U Street Music Hall",
+        :venue     => "Jammin' Java",
         :date      => date,
         :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
         :support   => supportNode.nil? ?   [] : supportNode.text.split(",")

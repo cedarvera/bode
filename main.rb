@@ -2,20 +2,22 @@
 
 require "json"
 
-FOLDER = "grabbers"
+FOLDER = "scrapers"
 threads = []
 shows = []
 
-# go through each grabber script in the grabbers folder and grab the shows
+# go through each scraper script in the scrapers folder and grab the shows
 Dir.foreach(FOLDER) do |file|
-  next unless file =~ /[[:word:]]/
-  # dynamically load and run the grab script to get the shows from the website
+  path = "#{FOLDER}/#{file}"
+  # make sure it is a file with extension "rb"
+  next unless File.file?(path) && file =~ /[[:word:]]\.rb/
+  # dynamically load and get the shows from the website
   mod = Module.new
-  load "#{FOLDER}/#{file}"
-  mod.const_set("Grabber", Grabber)
-  Object.send(:remove_const, :Grabber)
+  load path
+  mod.const_set("Scraper", Scraper)
+  Object.send(:remove_const, :Scraper)
   begin
-    mod::Grabber.new.get_shows do |new_shows|
+    mod::Scraper.new.get_shows do |new_shows|
       shows << new_shows
     end
   rescue Capybara::Poltergeist::StatusFailError
