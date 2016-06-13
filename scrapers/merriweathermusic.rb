@@ -3,11 +3,7 @@ require_relative "lib/scraper_base"
 class Scraper < ScraperBase
   # get the pages and return the resulting html
   def grab_pages
-    visit("http://www.930.com/concerts/")
-    yield(page.html)
-    visit("http://www.930.com/concerts/lincoln-theatre/")
-    yield(page.html)
-    visit("http://www.930.com/concerts/imp/")
+    visit("http://www.merriweathermusic.com/schedule/")
     yield(page.html)
   end
   # Go through the page and find the the shows
@@ -24,7 +20,7 @@ class Scraper < ScraperBase
       # create the show object
       {
         # If there is no venue than its at 930 club
-        :venue     => venueNode.nil? ?     "930 Club" : venueNode.text,
+        :venue     => venueNode.nil? ?     "Merriweather Post Pavilion" : venueNode.text,
         :date      => date,
         :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
         :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
