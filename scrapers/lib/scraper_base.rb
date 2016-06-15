@@ -15,10 +15,24 @@ Capybara.configure do |config|
   Capybara.default_selector = :css
 end
 
+# to differentiate from the dsl commands prefix with grab
 class ScraperBase
   include Capybara::DSL
+  # attempt to get the text of an element, else return the default
+  def grab_text(elem, selector, default)
+    node = elem.at(selector)
+    return default if node.nil?
+    text = node.text.strip
+    case default
+    when String then text
+    when Array then text.split(",")
+    when Date then convert_date(text)
+    else
+      default
+    end
+  end
   # Go through each url to get the shows
-  def get_shows
+  def grab_shows
     grab_pages do |html|
       shows = find_shows(Nokogiri::HTML(html)).flatten.compact
       yield({

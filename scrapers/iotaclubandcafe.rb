@@ -62,11 +62,11 @@ class Scraper < ScraperBase
             # fourth is the time and cost, we can ignore
 
             events.push({
-              :venue => "Iota Club & Cafe",
-              :date => curdate,
+              venue:     "Iota Club & Cafe",
+              date:      curdate,
               # assume the first is the headliner
-              :headliner => supports.first,
-              :support => supports.drop(1)
+              headliner: supports.first,
+              support:   supports.drop(1)
             })
           end
         end

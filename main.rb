@@ -17,7 +17,7 @@ Dir.foreach(FOLDER) do |file|
   mod.const_set("Scraper", Scraper)
   Object.send(:remove_const, :Scraper)
   begin
-    mod::Scraper.new.get_shows do |new_shows|
+    mod::Scraper.new.grab_shows do |new_shows|
       shows << new_shows
     end
   rescue Capybara::Poltergeist::StatusFailError

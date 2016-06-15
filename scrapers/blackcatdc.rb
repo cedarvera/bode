@@ -29,10 +29,10 @@ class Scraper < ScraperBase
       end
       # create the show object
       {
-        :venue     => "Black Cat",
-        :date      => date,
-        :headliner => headliners.first,
-        :support   => headliners.drop(1) + support
+        venue:     "Black Cat",
+        date:      date,
+        headliner: headliners.first,
+        support:   headliners.drop(1) + support
       }
     end
   end

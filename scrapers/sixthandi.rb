@@ -17,19 +17,11 @@ class Scraper < ScraperBase
     # so grab what we need
     page.search(".event-list-item").map do |elem|
       # It is split into two blocks
-      # artists are in the class 'event-content'
-      headlinerNode = elem.at(".event-content > .event-content-wrap > h2 > a")
-      supportNode   = elem.at(".event-content > .event-content-wrap > h3")
-      # date is in the class 'event-list-details'
-      dateNode      = elem.at(".event-list-details > .event-details-wrap dd")
-      # convert the date so we can see the year
-      date = convert_date(dateNode.text)
-      # create the show object
       {
-        :venue     => "Sixth & I Synagogue",
-        :date      => date,
-        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
-        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
+        venue:     "Sixth & I Synagogue",
+        date:      grab_text(elem, ".event-list-details > .event-details-wrap dd", Date.today),
+        headliner: grab_text(elem, ".event-content > .event-content-wrap > h2 > a", ""),
+        support:   grab_text(elem, ".event-content > .event-content-wrap > h3", [])
       }
     end
   end

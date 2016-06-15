@@ -12,17 +12,11 @@ class Scraper < ScraperBase
     # so grab what we need
     page.search(".vevent").map do |elem|
       # hamilton has the same format as uhall/930's website
-      headlinerNode = elem.at(".headliners a")
-      supportNode   = elem.at(".supports a")
-      dateNode      = elem.at(".dates")
-      # convert the date so we can see the year
-      date = convert_date(dateNode.text)
-      # create the show object
       {
-        :venue     => "The Hamilton",
-        :date      => date,
-        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
-        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
+        venue:     "The Hamilton",
+        date:      grab_text(elem, ".dates", Date.today),
+        headliner: grab_text(elem, ".headliners a", ""),
+        support:   grab_text(elem, ".supports a", [])
       }
     end
   end

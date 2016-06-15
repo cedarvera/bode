@@ -26,17 +26,12 @@ class Scraper < ScraperBase
       # convert the date so we can see the year
       date = convert_date(match)
 
-      # grab the rest of the information
-      headlinerNode = elem.at(".headliner")
-      # grab the siblings after the headliner element
-      supportNode   = elem.at(".headliner ~ small")
-
-      # create the show object
       {
-        :venue     => "The Howard Theatre",
-        :date      => date,
-        :headliner => headlinerNode.nil? ? "": headlinerNode.text,
-        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
+        venue:     "The Howard Theatre",
+        date:      date,
+        headliner: grab_text(elem, ".headliner", ""),
+        # grab the siblings after the headliner element
+        support:   grab_text(elem, ".headliner ~ small", [])
       }
     end
   end

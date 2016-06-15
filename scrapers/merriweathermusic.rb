@@ -11,19 +11,12 @@ class Scraper < ScraperBase
     # Looks like it is consistent in the classes it uses
     # so grab what we need
     page.search(".vevent").map do |elem|
-      headlinerNode = elem.at(".headliners a")
-      supportNode   = elem.at(".supports a")
-      dateNode      = elem.at(".dates")
-      venueNode     = elem.at(".venue")
-      # convert the date so we can see the year
-      date = convert_date(dateNode.text)
-      # create the show object
       {
-        # If there is no venue than its at 930 club
-        :venue     => venueNode.nil? ?     "Merriweather Post Pavilion" : venueNode.text,
-        :date      => date,
-        :headliner => headlinerNode.nil? ? "" : headlinerNode.text,
-        :support   => supportNode.nil? ?   [] : supportNode.text.split(",")
+        # If there is no venue than its at Merriweather
+        venue:     grab_text(elem, ".venue", "Merriweather Post Pavilion"),
+        date:      grab_text(elem, ".dates", Date.today),
+        headliner: grab_text(elem, ".headliners a", ""),
+        support:   grab_text(elem, ".supports a", [])
       }
     end
   end
