@@ -4,7 +4,11 @@ require "capybara/dsl"
 require "capybara/poltergeist"
 
 Capybara.register_driver :poltergeist do |driver|
-  Capybara::Poltergeist::Driver.new(driver, js_errors: false)
+  Capybara::Poltergeist::Driver.new(
+    driver,
+    js_errors: false,
+    phantomjs_logger: StringIO.new
+  )
 end
 
 Capybara.configure do |config|
@@ -25,7 +29,7 @@ class ScraperBase
     text = node.text.strip
     case default
     when String then text
-    when Array then text.split(",")
+    when Array then text.split(",").map { |t| t.strip }
     when Date then convert_date(text)
     else
       default
