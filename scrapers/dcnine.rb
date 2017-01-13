@@ -16,7 +16,11 @@ class Scraper < ScraperBase
     page.at("#content").children().each do |node|
       # h2 holds the headliner a["title"] (it has two duplicates)
       if node.name == "h2"
-        event[:headliner] = node.first_element_child["title"].strip
+        # there is a chance of the header not having a title
+        # so skip if nil before continuing
+        title = node.first_element_child["title"]
+        next if title.nil?
+        event[:headliner] = title.strip
       # h3 holds the support
       # it appears to be broken to multiple strong nodes
       elsif node.name == "h3"
