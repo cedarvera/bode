@@ -3,5 +3,5 @@ source "https://rubygems.org"
 # scraping
 gem "nokogiri"
 gem "capybara"
-gem "poltergeist"
+gem "selenium-webdriver"
 gem "taglib-ruby"

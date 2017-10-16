@@ -25,15 +25,15 @@ Dir.foreach(FOLDER) do |file|
   load path
   mod.const_set("Scraper", Scraper)
   Object.send(:remove_const, :Scraper)
-  begin
+  #begin
     puts("grabbing") if options[:verbose]
     mod::Scraper.new.grab_shows do |new_shows|
       shows << new_shows
     end
     puts("done") if options[:verbose]
-  rescue Capybara::Poltergeist::StatusFailError
-    puts("#{file}: site possibly down")
-  end
+  #rescue Capybara::Selenium::StatusFailError
+  #  puts("#{file}: site possibly down")
+  #end
 end
 
 json = shows.to_json

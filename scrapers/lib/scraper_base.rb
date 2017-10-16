@@ -1,22 +1,13 @@
 require 'date'
 require 'nokogiri'
 require "capybara/dsl"
-require "capybara/poltergeist"
-
-Capybara.register_driver :poltergeist do |driver|
-  Capybara::Poltergeist::Driver.new(
-    driver,
-    js_errors: false,
-    phantomjs_logger: StringIO.new
-  )
-end
+require "selenium-webdriver"
 
 Capybara.configure do |config|
   config.ignore_hidden_elements = true
-  Capybara.current_driver = :poltergeist
-  Capybara.default_driver = :poltergeist
-  Capybara.javascript_driver = :poltergeist
-  Capybara.default_selector = :css
+  Capybara.default_driver = :selenium_chrome_headless
+  Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.default_max_wait_time = 300
 end
 
 # to differentiate from the dsl commands prefix with grab
