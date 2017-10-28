@@ -4,17 +4,17 @@ Scape venues that I frequent for concerts and find the musicians and bands that 
 
 ## Requirements
 
-##### Ruby 2.2.1
+##### Ruby 2.3
 
 Binaries:
 
-    phantomjs
+    chromium
     
 Ruby gems:
 
     nokogiri
     capybara
-    poltergeist
+    selenium-webdriver
     taglib-ruby
     
 ## License
