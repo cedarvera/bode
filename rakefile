@@ -1,5 +1,13 @@
 task default: %w[run]
 
-task :run do
-  ruby "main.rb"
+SCRAPERS = Rake::FileList["scrapers/*.rb"]
+SCRAPERS.map! {|scraper| File.basename(scraper, ".rb") }
+
+# create a task for each scraper
+SCRAPERS.each do |scraper|
+  task scraper do
+    ruby "main.rb -v #{scraper}"
+  end
 end
+
+task :run => SCRAPERS

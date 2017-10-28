@@ -7,7 +7,7 @@ class Scraper < ScraperBase
     yield(page.html)
 
     while(has_link?(">"))
-      click_link(">")
+      visit(find_link(">")[:href])
       yield(page.html)
     end
   end
