@@ -1,14 +1,6 @@
 require 'date'
 require 'nokogiri'
 require "capybara/dsl"
-require "selenium-webdriver"
-
-Capybara.configure do |config|
-  config.ignore_hidden_elements = true
-  Capybara.default_driver = :selenium_chrome_headless
-  Capybara.javascript_driver = :selenium_chrome_headless
-  Capybara.default_max_wait_time = 300
-end
 
 # to differentiate from the dsl commands prefix with grab
 class ScraperBase

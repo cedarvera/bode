@@ -2,6 +2,8 @@
 
 require "optparse"
 require "json"
+require "capybara"
+require "selenium-webdriver"
 
 FOLDER = "scrapers"
 
@@ -14,6 +16,28 @@ OptionParser.new do |opts|
 end.parse!
 # get the scraper to run
 scraper = ARGV[0]
+
+# setup web driver
+Capybara.register_driver :headless_chromium do |app|
+  caps = Selenium::WebDriver::Remote::Capabilities.chrome(
+    "chromeOptions" => {
+      "binary" => "/usr/bin/chromium",
+      "args" => %w{headless disable-gpu}
+    }
+  )
+  driver = Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    desired_capabilities: caps
+  )
+end
+
+Capybara.configure do |config|
+  config.ignore_hidden_elements = true
+  Capybara.default_driver = :headless_chromium
+  Capybara.javascript_driver = :headless_chromium
+  Capybara.default_max_wait_time = 300
+end
 
 shows = []
 # load a specific scraper script in the scrapers folder and grab the shows
