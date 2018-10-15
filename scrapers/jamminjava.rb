@@ -21,7 +21,7 @@ class Scraper < ScraperBase
         venue:     "Jammin' Java",
         date:      grab_text(elem, ".dates", Date.today),
         headliner: grab_text(elem, ".headliners a", ""),
-        support:   grab_text(elem, ".supports a", [])
+        support:   grab_text(elem, ".supports", [])
       }
     end
   end
