@@ -5,6 +5,11 @@ require "capybara/dsl"
 # to differentiate from the dsl commands prefix with grab
 class ScraperBase
   include Capybara::DSL
+  @is_verbose
+  # constructor. get the options such as verbosity
+  def initialize(options)
+    @is_verbose = options[:verbose]
+  end
   # attempt to get the text of an element, else return the default
   def grab_text(elem, selector, default)
     node = elem.at(selector)
@@ -37,6 +42,12 @@ class ScraperBase
   def grab_shows
     grab_pages do |html|
       shows = find_shows(Nokogiri::HTML(html)).flatten.compact
+      if @is_verbose and not shows.nil?
+        shows.each do |show|
+          puts("#{show[:date]}")
+          puts("  #{show[:headliner]}\t#{show[:support].join("\t")}")
+        end
+      end
       yield({
         html: html,
         shows: shows

@@ -52,7 +52,7 @@ mod.const_set("Scraper", Scraper)
 Object.send(:remove_const, :Scraper)
 begin
   puts("grabbing") if options[:verbose]
-  mod::Scraper.new.grab_shows do |new_shows|
+  mod::Scraper.new(options).grab_shows do |new_shows|
     shows << new_shows
   end
   puts("done") if options[:verbose]
