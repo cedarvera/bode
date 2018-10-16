@@ -10,12 +10,12 @@ class Scraper < ScraperBase
   def find_shows(page)
     # Looks like it is consistent in the classes it uses
     # so grab what we need
-    page.search(".vevent").map do |elem|
+    page.search(".upcoming-view.grid .vevent").map do |elem|
       {
         venue:     "930 Club",
-        date:      grab_text(elem, ".dates", Date.today),
+        date:      grab_text(elem, ".date-ymd", Date.today),
         headliner: grab_text(elem, ".headliners a", ""),
-        support:   grab_text(elem, ".supports a", [])
+        support:   grab_texts(elem, ".supports a", "")
       }
     end
   end
