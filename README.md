@@ -9,14 +9,15 @@ Scape venues that I frequent for concerts and find the musicians and bands that 
 Binaries:
 
     chromium
+    chromium-driver
     
 Ruby gems:
 
     nokogiri
     capybara
     selenium-webdriver
-    taglib-ruby
-    
+    rainbow
+
 ## License
 
 bode is available under the [MIT license](http://opensource.org/licenses/MIT).

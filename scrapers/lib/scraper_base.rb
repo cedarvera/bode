@@ -9,6 +9,7 @@ class ScraperBase
   # constructor. get the options such as verbosity
   def initialize(options)
     @is_verbose = options[:verbose]
+    @rainbow = options[:colorize]
   end
   # attempt to get the text of an element, else return the default
   def grab_text(elem, selector, default)
@@ -44,8 +45,13 @@ class ScraperBase
       shows = find_shows(Nokogiri::HTML(html)).flatten.compact
       if @is_verbose and not shows.nil?
         shows.each do |show|
-          puts("#{show[:date]}")
-          puts("  #{show[:headliner]}\t#{show[:support].join("\t")}")
+          colors = [ :lavender, :salmon, :turquoise, :mediumspringgreen, :peachpuff, :aquamarine ]
+          date = @rainbow.wrap("#{show[:date]}").underline
+          headliner = @rainbow.wrap(show[:headliner]).gold
+          support = show[:support].map do |sup|
+            @rainbow.wrap(sup).color(colors.rotate![0])
+          end
+          puts("#{date}\t#{headliner}\t#{support.join("\t")}")
         end
       end
       yield({

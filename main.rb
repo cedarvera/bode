@@ -4,14 +4,22 @@ require "optparse"
 require "json"
 require "capybara"
 require "selenium-webdriver"
+require "rainbow"
 
 FOLDER = "scrapers"
 
-options = {}
+# options with defaults
+options = {
+  :verbose => false,
+  :colorize => Rainbow.new
+}
+options[:colorize].enabled = false
+
 OptionParser.new do |opts|
   opts.banner = "Usage: main.rb [options] SCRAPER"
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") { |v| options[:verbose] = v }
+  opts.on("-c", "--[no-]color", "Colorize text output") { |c| options[:colorize].enabled = c }
 
 end.parse!
 # get the scraper to run

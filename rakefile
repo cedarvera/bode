@@ -6,7 +6,7 @@ SCRAPERS.map! {|scraper| File.basename(scraper, ".rb") }
 # create a task for each scraper
 SCRAPERS.each do |scraper|
   task scraper do
-    ruby "main.rb -v #{scraper}"
+    ruby "main.rb -vc #{scraper}"
   end
 end
 
