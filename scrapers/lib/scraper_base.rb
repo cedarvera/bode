@@ -5,7 +5,6 @@ require "capybara/dsl"
 # to differentiate from the dsl commands prefix with grab
 class ScraperBase
   include Capybara::DSL
-  @is_verbose
   # constructor. get the options such as verbosity
   def initialize(options)
     @is_verbose = options[:verbose]
